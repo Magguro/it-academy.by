@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 03.Git.Hosting
+# Auto git push to all remote repos
+
 REPO="./"
 
 git remote add github git@github.com:Magguro/it-academy.by.git &> /dev/null 
