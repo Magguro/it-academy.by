@@ -20,7 +20,7 @@ then
   git add --all
   echo "enter commit message :  "
   read comm_msg
-  git commit -m $comm_msg
+  git commit -m "$comm_msg"
   git push --all github -f
   git push --all gitlab -f
   git push --all bitbucket -f
