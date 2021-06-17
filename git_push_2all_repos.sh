@@ -27,7 +27,7 @@ while true; do
     git commit -m "$comm_msg"
     git push --all github -f
     git push --all gitlab -f
-    git push --all bitbucket -f;;
+    git push --all bitbucket -f; break;;
     [Nn]* ) exit 0;;
     * ) echo "Please answer Y or N.";;
   esac
