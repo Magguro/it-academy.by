@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # 03.Git.Hosting
