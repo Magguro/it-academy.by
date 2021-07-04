@@ -1,0 +1,10 @@
+Host rhel8
+	User admin
+	HostName 172.24.172.194
+Host 192.168.100.*
+	ProxyJump rhel8
+Host ec_jump
+	User jump_sa
+	HostName 178.124.206.53
+Host 192.168.202.0 192.168.203.0
+	ProxyJump ec_jump
