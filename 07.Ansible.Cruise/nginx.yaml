@@ -1,0 +1,3 @@
+- hosts: vagrant_hosts
+  roles:
+    - nginx

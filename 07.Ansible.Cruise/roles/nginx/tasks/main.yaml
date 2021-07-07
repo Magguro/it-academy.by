@@ -1,0 +1,22 @@
+---
+- name: Include nginx deploy for Debian systems
+  include: nginx_ubuntu.yaml
+  when: ansible_os_family == 'Debian'
+
+- name: Include nginx deploy for RedHat systems
+  include: nginx_centos.yaml
+  when: ansible_os_family == 'RedHat'
+
+
+
+- name: Copy first page
+  copy:
+    src: index.html
+    dest: "{{ nginx_home_path }}"
+    owner: root
+    group: root
+    mode: '0775'
+  notify:
+    - restart nginx
+
+
