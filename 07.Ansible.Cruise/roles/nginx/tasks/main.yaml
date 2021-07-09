@@ -13,6 +13,17 @@
     dest: "{{ nginx_conf_path }}"
   notify:
     - restart nginx
+    
+- name: Check config
+  shell: |
+    cat /etc/nginx/nginx.conf
+  register: nginx_config
+  changed_when: false
+  
+- name: print out
+  debug:
+    msg: "{{ nginx_config.stdout_lines }}"
+    
 
 - name: Copy first page
   copy:
