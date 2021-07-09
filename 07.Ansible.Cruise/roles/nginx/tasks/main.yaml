@@ -25,6 +25,24 @@
     timeout: 3
   register: out
 
+- name: Create hosts entry
+  template:
+    src: "hosts.j2"
+    dest: "/etc/hosts"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  
+- name: Check template
+  shell: |
+    cat /etc/hosts
+  register: out
+  changed_when: false
+- name: print out
+  debug:
+    msg: "{{ out.stdout_lines }}"
+
 - name: print out
   debug:
     msg: "{{ out }}"
@@ -35,7 +53,7 @@
     return_content: yes
   loop: "{{ virtual_hosts }}"
   register: this
-  failed_when: "'Hi' not in this.content"
+  failed_when: "'Hello' not in this.content"
   tags:
   - tests
 

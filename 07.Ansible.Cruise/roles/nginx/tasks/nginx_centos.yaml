@@ -3,7 +3,7 @@
   yum:
     name: epel-release
     state: present
-    update-cache: yes
+    update_cache: yes
 
 - name: Install Nginx package CentOS
   yum:
