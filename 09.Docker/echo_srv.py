@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import socket
 import time
+=======
+
+import socket
+>>>>>>> 267f777757ae1a822c56af45dc68cf6a927039c8
 
 with socket.socket() as s:
     host = 'localhost'
@@ -11,8 +16,14 @@ with socket.socket() as s:
     with con:
         while True:
             data = con.recv(1024)
+<<<<<<< HEAD
             con.sendall(b"Echo server reply: ")
             if not data:
                 break
             con.sendall(data)
         con.close()
+=======
+            if not data:
+                break
+            con.sendall(data)
+>>>>>>> 267f777757ae1a822c56af45dc68cf6a927039c8
