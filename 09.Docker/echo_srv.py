@@ -16,4 +16,4 @@ with socket.socket() as s:
             print(data)
             if not data:
                 continue
-    # con.close()
+    
