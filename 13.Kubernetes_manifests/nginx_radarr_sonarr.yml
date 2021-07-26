@@ -163,8 +163,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 8080
-    targetPort: 80
+  - port: 80
     protocol: TCP
   selector:
     app: simple-web
@@ -206,21 +205,21 @@ spec:
     serviceName: default-http-backend
     servicePort: 80
   rules:
-  - host: webserver.k8s-27.sa
+  - host: nginx.k8s-17.sa
     http:
       paths:
       - path: /
         backend:
           serviceName: nginx-web-service
           servicePort: 80
-  - host: radarr.k8s-27.sa
+  - host: radarr.k8s-17.sa
     http:
       paths:
       - path: /
         backend:
           serviceName: radarr-service
           servicePort: 7878
-  - host: sonarr.k8s-27.sa
+  - host: sonarr.k8s-17.sa
     http:
       paths:
       - path: /
