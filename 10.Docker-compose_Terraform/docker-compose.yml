@@ -3,6 +3,7 @@ version: '3'
 services:
   nginx:
     image: nginx
+    imagePullPolicy: IfNotPresent
     container_name: nginx
     depends_on: 
       - sonarr
@@ -14,6 +15,7 @@ services:
     restart: always
   sonarr:
     image: linuxserver/sonarr:latest
+    imagePullPolicy: IfNotPresent
     container_name: sonarr
     ports:
       - 8989:8989
@@ -28,6 +30,7 @@ services:
       - ./sonarr/downloads:/downloads
   radarr:
     image: ghcr.io/linuxserver/radarr:latest
+    imagePullPolicy: IfNotPresent
     container_name: radarr
     ports:
       - 7878:7878
