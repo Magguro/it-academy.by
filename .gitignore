@@ -11,7 +11,6 @@ __pycache__
 *.iml
 .project
 .vagrant
-
 */radarr
 */sonarr
 12.k8s_workshop/k9s
