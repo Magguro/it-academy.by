@@ -1,5 +1,5 @@
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: prometheus
@@ -44,15 +44,25 @@ metadata:
 data:
   prometheus.rules: |-
     groups:
-    - name: devopscube demo alert
+    - name: demo alert
       rules:
       - alert: High Pod Memory
-        expr: sum(container_memory_usage_bytes) > 1
+        expr: sum(container_memory_usage_bytes) > 102022881280
         for: 1m
         labels:
           severity: slack
         annotations:
           summary: High Memory Usage
+    - name: cpu overload
+      rules:
+      - alert: Cpu Overload per pod
+        expr: sum(rate(container_cpu_usage_seconds_total[1m]))by(container) > 1
+        for: 1m
+        labels:
+          severity: slack
+        annotations:
+          summary: "High usage on {{ $labels.instance }}"
+          description: "{{ $labels.instance }} has a average CPU idle (current value: {{ $value }}s)"
   prometheus.yml: |-
     global:
       scrape_interval: 5s
@@ -236,6 +246,13 @@ spec:
               mountPath: /etc/prometheus/
             - name: prometheus-storage-volume
               mountPath: /prometheus/
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 1500Mi
+            limits:
+              cpu: 2000m
+              memory: 1500Mi
       volumes:
         - name: prometheus-config-volume
           configMap:
