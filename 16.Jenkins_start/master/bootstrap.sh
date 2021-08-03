@@ -9,6 +9,7 @@ systemctl enable docker
 systemctl start docker
 
 usermod -s /bin/bash jenkins
+sudo sed -i 's/JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true"/JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses=true"/g' /etc/sysconfig/jenkins
 #firewall-cmd --permanent --service=jenkins --add-port=8080/tcp
 #firewall-cmd --reload
 usermod -a -G docker jenkins
