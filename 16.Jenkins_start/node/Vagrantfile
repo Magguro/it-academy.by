@@ -12,7 +12,7 @@ SCRIPT
 Vagrant.configure("2") do |config|
     config.vm.box = "centos/7"
     config.vm.define "Jenkins_node"
-    config.vm.network "public_network", ip: "192.168.50.201",  bridge: "wlp2s0"
+    config.vm.network "private_network", ip: "192.168.101.200" #, bridge: "enp3s0"
     config.vm.provision "file", 
         source: "authorized_keys", 
         destination: "/tmp/authorized_keys"
