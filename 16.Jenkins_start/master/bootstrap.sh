@@ -9,8 +9,8 @@ systemctl enable docker
 systemctl start docker
 
 usermod -s /bin/bash jenkins
-sudo firewall-cmd --permanent --service=jenkins --add-port=8080/tcp
-sudo firewall-cmd --reload
+#firewall-cmd --permanent --service=jenkins --add-port=8080/tcp
+#firewall-cmd --reload
 usermod -a -G docker jenkins
 systemctl enable jenkins
 systemctl start jenkins
