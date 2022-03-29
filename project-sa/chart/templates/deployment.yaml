@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.service.name }}
+  name: {{ .Values.service.name }}-depl
+  namespace: {{ .Values.service.namespace }}
+spec:
+  replicas: {{ .Values.service.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.service.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.name }}
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: {{ .Values.service.name }}-pv
+          persistentVolumeClaim:
+            claimName: {{ .Values.service.name }}-claim0
+      containers:
+        - name: {{ .Values.service.name }}
+          image: {{ .Values.CI.image }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: wordpress-prod
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: mysql-service-prod
+            - name: WORDPRESS_DB_USER
+              value: wordpress
+            - name: WORDPRESS_DB_PASSWORD
+              value: wordpress
+            - name: WORDPRESS_DB_NAME
+              value: wordpress
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 200m
+              memory: 768Mi
+          volumeMounts:
+            - name: {{ .Values.service.name }}-pv
+              mountPath: /var/www/html

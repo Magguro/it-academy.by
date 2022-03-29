@@ -1,0 +1,20 @@
+service:
+    type: ClusterIP
+    name: wordpress-dev
+    replicas: 1
+    namespace: project
+ingress:
+    name: wp-dev.k8s.sa
+# persistence:
+# type: pvc
+# enabled: true
+# storageClassName: nfs-storageclass
+# accessModes:
+#   - ReadWriteOnce
+# size: 25Gi
+# # annotations: {}
+# finalizers:
+#   - kubernetes.io/pvc-protection
+# subPath: ""
+# existingClaim:
+

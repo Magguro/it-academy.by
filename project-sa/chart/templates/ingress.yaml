@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.name }}
+  namespace: {{ .Values.service.namespace }}
+spec:
+  backend:
+    serviceName: {{ .Values.service.name }}-service
+    servicePort: 8081
+  rules:
+  - host: {{ .Values.ingress.name }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ .Values.service.name }}-service
+          servicePort: 8081

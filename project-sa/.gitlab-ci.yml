@@ -1,0 +1,63 @@
+image: "node1:31320/docker:1.1"
+
+variables:
+  REPOSITORY_URL: "node1:31320"
+  
+stages:
+  - build
+  - deploy
+  
+build-feature:
+  stage: build
+  tags:
+      - kube
+  except:
+      - main
+      - dev
+  script:
+        - docker build --network=host --no-cache -t ${REPOSITORY_URL}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID} .     
+
+build:
+  stage: build
+  tags:
+      - kube
+  only:
+      - main
+      - dev
+  script:
+       # - docker login --username $REGISTRY_USERNAME --password $REGISTRY_PASSWORD $REPOSITORY_URL
+        - docker build --network=host --no-cache -t ${REPOSITORY_URL}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID} .
+        - docker push ${REPOSITORY_URL}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID}
+
+deploy-prod:
+  stage: deploy
+  tags:
+      - kube
+  only:
+      - main
+  script:
+      - helm upgrade --install
+        --debug
+        --set CI.image=${REPOSITORY_URL}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID}
+        --wait
+        --namespace=project
+        --version=$CI_PIPELINE_ID
+        -f ./chart/Values_prod.yaml
+        ${CI_PROJECT_NAME}-prod ./chart
+
+deploy-dev:
+  stage: deploy
+  tags:
+      - kube
+  only:
+      - dev
+  script:
+      - helm upgrade --install
+        --debug
+        --set CI.image=${REPOSITORY_URL}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID}
+        --set CI.id=${CI_PIPELINE_ID}
+        --wait
+        --namespace=project
+        --version=$CI_PIPELINE_ID
+        -f ./chart/Values_dev.yaml
+        ${CI_PROJECT_NAME}-test ./chart

@@ -1,0 +1,7 @@
+apiVersion: v1
+appVersion: 1
+maintainers:
+- email: to.nemkovich@gmail.com
+  name: Igor
+name: wordpress-prod
+version: 5.6.2
